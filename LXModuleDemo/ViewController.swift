@@ -44,7 +44,7 @@ class LXModule1: LXModule {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "\(indexPath.section) - \(indexPath.row)")
+        cell.setTitle(title: "LXModule1 \(indexPath.section) - \(indexPath.row)")
         return cell
     }
 }
@@ -61,7 +61,7 @@ class LXModule2: LXModule {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "\(indexPath.section) - \(indexPath.row)")
+        cell.setTitle(title: "LXModule2 \(indexPath.section) - \(indexPath.row)")
         return cell
     }
 }
@@ -77,7 +77,7 @@ class LXModule3: LXModule {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "\(indexPath.section) - \(indexPath.row)")
+        cell.setTitle(title: "LXModule3 \(indexPath.section) - \(indexPath.row)")
         return cell
     }
 }
@@ -88,7 +88,8 @@ class ViewController: LXModuleViewController {
         super.viewDidLoad()
         
     }
-    
+    //   [1,2,3] [1,2,3]
+    // [ [4,5,6] [7,8,9] ]
     override func modules() -> [LXModule]! {
         return [LXModule1(), LXModule2(), LXModule3()]
     }
