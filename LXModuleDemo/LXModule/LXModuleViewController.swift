@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxCocoa
 
 //class LXModuleTableView: UITableView {
 //    var pageIndex: Int
@@ -32,6 +33,32 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+//            for sectionModel in self.headerSectionModels {
+//                if sectionModel.module is LXModule4 {
+//                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: 0)))
+//                }
+//            }
+//        })
+        // observe contentSize
+        
+        self.tableViews[0].rx.observe(CGSize.self, "contentSize").subscribe(onNext: { (size) in
+            
+            for sectionModel in self.headerSectionModels {
+                if sectionModel.module is LXModule4 {
+                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: 0)))
+                }
+            }
+            
+        }, onError: nil, onCompleted: nil, onDisposed: nil)
+        
+        
+        
+        self.tableViews[0].rx.contentOffset.subscribe(onNext: { (point) in
+            print(point)
+        }, onError: nil, onCompleted: nil, onDisposed: nil)
+        
     }
     
     func pageIndex(_ tableView: UITableView) -> Int {
@@ -60,6 +87,7 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
         let pageCount = self.pagesModuleModels.count
         self.scrollView = UIScrollView()
         self.scrollView.frame = UIScreen.main.bounds
+        self.scrollView.backgroundColor = UIColor.yellow
         self.scrollView.isPagingEnabled = true
         self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(pageCount), height: screenHeight)
         self.view.addSubview(self.scrollView)

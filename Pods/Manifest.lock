@@ -1,0 +1,19 @@
+PODS:
+  - Reveal-SDK (11)
+  - RxCocoa (4.0.0):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.0.0)
+
+DEPENDENCIES:
+  - Reveal-SDK
+  - RxCocoa (~> 4.0)
+  - RxSwift (~> 4.0)
+
+SPEC CHECKSUMS:
+  Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
+  RxCocoa: d62846ca96495d862fa4c59ea7d87e5031d7340e
+  RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
+
+PODFILE CHECKSUM: 996abf295ad8a61c8283ac65f8ebf486f348e83a
+
+COCOAPODS: 1.3.1
