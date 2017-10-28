@@ -8,12 +8,19 @@
 
 import UIKit
 
+//class LXModuleTableView: UITableView {
+//    var pageIndex: Int
+//}
+
 class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     func modules() -> (header :[LXModule], pages: [[LXModule]]) {
         return ([], [])
     }
     
+    var scrollView: UIScrollView!
     var tableView: UITableView! = UITableView()
+    
+    var tableViews: [UITableView]!
     var headerModuleModels: [LXModuleModel]!
     var headerSectionModels: [LXSectionModel]!
     var pagesModuleModels: [[LXModuleModel]]!
@@ -24,12 +31,17 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(self.tableView)
-        self.tableView.frame = UIScreen.main.bounds
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         self.setup()
-        self.tableView.reloadData()
+    }
+    
+    func pageIndex(_ tableView: UITableView) -> Int {
+        for index in 0..<self.tableViews.count {
+            if tableView == self.tableViews[index] {
+                return index
+            }
+        }
+        assert(false, "error")
+        return 0
     }
     
     func setup() {
@@ -42,6 +54,24 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
                 return LXModuleModel(module: module)
             })
             self.pagesModuleModels.append(pageModuleModels)
+        }
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let pageCount = self.pagesModuleModels.count
+        self.scrollView = UIScrollView()
+        self.scrollView.frame = UIScreen.main.bounds
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(pageCount), height: screenHeight)
+        self.view.addSubview(self.scrollView)
+        
+        self.tableViews = []
+        for index in 0..<pageCount {
+            let pageTableView = UITableView()
+            pageTableView.delegate = self
+            pageTableView.dataSource = self
+            pageTableView.frame = CGRect(x: screenWidth * CGFloat(index), y: 0, width: screenWidth, height: screenHeight)
+            self.scrollView.addSubview(pageTableView)
+            self.tableViews.append(pageTableView)
         }
             
         let headerSectionCount = self.headerModuleModels.reduce(0) { (sectionIndexInTableView, sectionModel) -> Int in
@@ -90,6 +120,9 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        self.currentPage = self.pageIndex(tableView)
+        
         let section = indexPath.section
         var sectionModel: LXSectionModel!
         if section < self.headerSectionModels.count {
@@ -102,10 +135,12 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        self.currentPage = self.pageIndex(tableView)
         return self.headerSectionModels.count + self.pagesSectionModels[self.currentPage].count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.currentPage = self.pageIndex(tableView)
         var sectionModel: LXSectionModel!
         if section < self.headerSectionModels.count {
             sectionModel = self.headerSectionModels[section]
@@ -116,6 +151,7 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        self.currentPage = self.pageIndex(tableView)
         let section = indexPath.section
         var sectionModel: LXSectionModel!
         if section < self.headerSectionModels.count {
