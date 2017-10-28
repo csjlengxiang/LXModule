@@ -51,8 +51,8 @@ class LXModuleModel {
 }
 
 protocol LXModuleViewControllerDelegate: UITableViewDelegate, UITableViewDataSource {
-    var tableView: UITableView! { get set }
-    var moduleModels: [LXModuleModel]! { get set }
-    func modules() -> [LXModule]!
+//    var tableView: UITableView! { get set }
+//    var moduleModels: [LXModuleModel]! { get set }
+    func modules() -> (header :[LXModule], pages: [[LXModule]])
     func setup()
 }

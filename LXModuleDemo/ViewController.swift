@@ -87,12 +87,23 @@ class ViewController: LXModuleViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let btn = UIButton()
+        btn.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
+        btn.backgroundColor = UIColor.black
+        self.view.addSubview(btn)
+        
+        btn.addTarget(self, action: #selector(ViewController.btnClick(sender:)), for: .touchUpInside)
     }
+    
+    @objc func btnClick(sender: UIButton) {
+        self.currentPage = (self.currentPage + 1) % self.pagesModuleModels.count
+        self.tableView.reloadData()
+    }
+    
     //   [1,2,3] [1,2,3]
     // [ [4,5,6] [7,8,9] ]
-    override func modules() -> [LXModule]! {
-        return [LXModule1(), LXModule2(), LXModule3()]
+    override func modules() -> (header :[LXModule], pages: [[LXModule]]) {
+        return ([LXModule1(), LXModule2()], [[LXModule1(), LXModule2()], [LXModule2(), LXModule3()], [LXModule3(), LXModule1()]])
     }
-
 }
 
