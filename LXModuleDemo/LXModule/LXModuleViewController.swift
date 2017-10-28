@@ -30,6 +30,10 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     var currentPage: Int = 0
     var sectionCount: Int = 0
 
+    var hoverHeight: CGFloat = 0
+    
+    var isHover: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
@@ -44,21 +48,42 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
         // observe contentSize
         
         self.tableViews[0].rx.observe(CGSize.self, "contentSize").subscribe(onNext: { (size) in
-            
-            for sectionModel in self.headerSectionModels {
+            for sectionIndex in 0..<self.headerSectionModels.count {
+                let sectionModel = self.headerSectionModels[sectionIndex]
                 if sectionModel.module is LXModule4 {
-                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: 0)))
+                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)))
+                    
+                    
+                    self.hoverHeight = self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)).origin.y
+                    
+                    self.tableViews[1].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+                    self.tableViews[2].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+                    self.tableViews[3].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
                 }
             }
-            
         }, onError: nil, onCompleted: nil, onDisposed: nil)
         
+        self.scrollView.isScrollEnabled = false
         
-        
-        self.tableViews[0].rx.contentOffset.subscribe(onNext: { (point) in
+        self.offsetObserve(self.tableViews[0])
+        self.offsetObserve(self.tableViews[1])
+        self.offsetObserve(self.tableViews[2])
+        self.offsetObserve(self.tableViews[3])
+    }
+    
+    func offsetObserve(_ tableView: UITableView) {
+        tableView.rx.contentOffset.subscribe(onNext: { (point) in
             print(point)
+            if point.y >= self.hoverHeight && !self.isHover {
+                self.scrollView.isScrollEnabled = true
+                print ("悬浮")
+                self.isHover = true
+            } else if point.y <= self.hoverHeight && self.isHover {
+                self.scrollView.isScrollEnabled = false
+                print ("取消悬浮")
+                self.isHover = false
+            }
         }, onError: nil, onCompleted: nil, onDisposed: nil)
-        
     }
     
     func pageIndex(_ tableView: UITableView) -> Int {
@@ -89,6 +114,7 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
         self.scrollView.frame = UIScreen.main.bounds
         self.scrollView.backgroundColor = UIColor.yellow
         self.scrollView.isPagingEnabled = true
+//        self.scrollView
         self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(pageCount), height: screenHeight)
         self.view.addSubview(self.scrollView)
         

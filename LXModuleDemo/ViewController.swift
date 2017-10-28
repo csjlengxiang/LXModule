@@ -124,7 +124,10 @@ class ViewController: LXModuleViewController {
     //   [1,2,3] [1,2,3]
     // [ [4,5,6] [7,8,9] ]
     override func modules() -> (header :[LXModule], pages: [[LXModule]]) {
-        return ([LXModule1(), LXModule4()], [[LXModule2(), LXModule3()], [LXModule3(), LXModule2()]])
+        return ([LXModule1(), LXModule4()], [[LXModule2(), LXModule3()],
+                                             [LXModule3(), LXModule2()],
+                                             [LXModule2(), LXModule2()],
+                                             [LXModule3(), LXModule3()]])
     }
 }
 
