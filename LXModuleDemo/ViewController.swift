@@ -32,7 +32,33 @@ class Cell: UITableViewCell {
     
 }
 
+class CellCollection {
+    var cells: [Int : UITableViewCell] = [:]
+    
+}
+
 class LXModule4: LXModule {
+    
+    var containerView: UIView!
+    
+    var cells: CellCollection!
+    
+    var isFirstLoad: Bool = false
+    
+    override init() {
+        
+        self.cells = CellCollection()
+        containerView = UIView()
+        containerView.backgroundColor = UIColor.red
+        containerView.alpha = 0.5
+        containerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 43)
+        let lb = UILabel()
+        lb.frame = CGRect(x: 200, y: 0, width: 200, height: 44)
+        lb.text = "悬浮窗"
+        containerView.addSubview(lb)
+        
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -41,23 +67,35 @@ class LXModule4: LXModule {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ _tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tableView = _tableView as! LXModuleTableView
         
-        let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "LXModule4 \(indexPath.section) - \(indexPath.row)")
-        cell.backgroundColor = UIColor.red
-        return cell
+        let cell: UITableViewCell!
+        let index = tableView.pageIndex
+        if self.cells.cells[index] != nil {
+            cell = self.cells.cells[index]!
+        } else {
+            cell = Cell(style: .default, reuseIdentifier: nil)
+            cell.backgroundColor = UIColor.green
+            self.cells.cells[index] = cell
+        }
+        if index == 0 && !self.isFirstLoad {
+            self.isFirstLoad = true
+            cell.addSubview(self.containerView)
+        }
+        return cell!
     }
 }
 
 class LXModule1: LXModule {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 15
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -70,12 +108,13 @@ class LXModule1: LXModule {
 
 class LXModule2: LXModule {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -88,11 +127,11 @@ class LXModule2: LXModule {
 
 class LXModule3: LXModule {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

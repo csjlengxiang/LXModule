@@ -9,9 +9,9 @@
 import UIKit
 import RxCocoa
 
-//class LXModuleTableView: UITableView {
-//    var pageIndex: Int
-//}
+class LXModuleTableView: UITableView {
+    var pageIndex: Int = 0
+}
 
 class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     func modules() -> (header :[LXModule], pages: [[LXModule]]) {
@@ -19,9 +19,9 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     }
     
     var scrollView: UIScrollView!
-    var tableView: UITableView! = UITableView()
     
-    var tableViews: [UITableView]!
+    var tableView: UITableView! = UITableView()
+    var tableViews: [LXModuleTableView]!
     var headerModuleModels: [LXModuleModel]!
     var headerSectionModels: [LXSectionModel]!
     var pagesModuleModels: [[LXModuleModel]]!
@@ -33,6 +33,9 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
     var hoverHeight: CGFloat = 0
     
     var isHover: Bool = false
+    
+    var hoverView: UIView!
+    var hoverCell: CellCollection!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,34 +56,37 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
                 if sectionModel.module is LXModule4 {
                     print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)))
                     
+                    self.hoverCell = (sectionModel.module as! LXModule4).cells
+                    self.hoverView = (sectionModel.module as! LXModule4).containerView
                     
                     self.hoverHeight = self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)).origin.y
                     
-                    self.tableViews[1].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
-                    self.tableViews[2].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
-                    self.tableViews[3].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+                    for index in 1..<self.tableViews.count {
+                        self.tableViews[index].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+                    }
                 }
             }
         }, onError: nil, onCompleted: nil, onDisposed: nil)
         
         self.scrollView.isScrollEnabled = false
         
-        self.offsetObserve(self.tableViews[0])
-        self.offsetObserve(self.tableViews[1])
-        self.offsetObserve(self.tableViews[2])
-        self.offsetObserve(self.tableViews[3])
+        for tableView in self.tableViews {
+            self.offsetObserve(tableView)
+        }
     }
     
-    func offsetObserve(_ tableView: UITableView) {
+    func offsetObserve(_ tableView: LXModuleTableView) {
         tableView.rx.contentOffset.subscribe(onNext: { (point) in
             print(point)
-            if point.y >= self.hoverHeight && !self.isHover {
+            if point.y > self.hoverHeight && !self.isHover {
                 self.scrollView.isScrollEnabled = true
                 print ("悬浮")
                 self.isHover = true
-            } else if point.y <= self.hoverHeight && self.isHover {
+                self.view.addSubview(self.hoverView)
+            } else if point.y < self.hoverHeight && self.isHover {
                 self.scrollView.isScrollEnabled = false
                 print ("取消悬浮")
+                self.hoverCell.cells[tableView.pageIndex]!.addSubview(self.hoverView)
                 self.isHover = false
             }
         }, onError: nil, onCompleted: nil, onDisposed: nil)
@@ -120,7 +126,8 @@ class LXModuleViewController: UIViewController, LXModuleViewControllerDelegate {
         
         self.tableViews = []
         for index in 0..<pageCount {
-            let pageTableView = UITableView()
+            let pageTableView = LXModuleTableView()
+            pageTableView.pageIndex = index
             pageTableView.delegate = self
             pageTableView.dataSource = self
             pageTableView.frame = CGRect(x: screenWidth * CGFloat(index), y: 0, width: screenWidth, height: screenHeight)
