@@ -17,6 +17,8 @@
 		646C5A8F1FA36E8200A53177 /* LXModuleDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646C5A8E1FA36E8200A53177 /* LXModuleDemoUITests.swift */; };
 		646C5A9D1FA36F3F00A53177 /* LXModuleViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646C5A9C1FA36F3F00A53177 /* LXModuleViewControllerDelegate.swift */; };
 		646C5A9F1FA37A3300A53177 /* LXModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646C5A9E1FA37A3300A53177 /* LXModuleViewController.swift */; };
+		64923A051FA76DAE000D8D43 /* LXModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64923A041FA76DAE000D8D43 /* LXModule.swift */; };
+		64923A071FA78097000D8D43 /* LXModuleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64923A061FA78097000D8D43 /* LXModuleTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		646C5A901FA36E8200A53177 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		646C5A9C1FA36F3F00A53177 /* LXModuleViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LXModuleViewControllerDelegate.swift; path = LXModule/LXModuleViewControllerDelegate.swift; sourceTree = "<group>"; };
 		646C5A9E1FA37A3300A53177 /* LXModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LXModuleViewController.swift; path = LXModule/LXModuleViewController.swift; sourceTree = "<group>"; };
+		64923A041FA76DAE000D8D43 /* LXModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LXModule.swift; path = LXModule/LXModule.swift; sourceTree = "<group>"; };
+		64923A061FA78097000D8D43 /* LXModuleTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LXModuleTableView.swift; path = LXModule/LXModuleTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				646C5A7A1FA36E8200A53177 /* Info.plist */,
 				646C5A9C1FA36F3F00A53177 /* LXModuleViewControllerDelegate.swift */,
 				646C5A9E1FA37A3300A53177 /* LXModuleViewController.swift */,
+				64923A041FA76DAE000D8D43 /* LXModule.swift */,
+				64923A061FA78097000D8D43 /* LXModuleTableView.swift */,
 			);
 			path = LXModuleDemo;
 			sourceTree = "<group>";
@@ -351,9 +357,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				646C5A9F1FA37A3300A53177 /* LXModuleViewController.swift in Sources */,
+				64923A071FA78097000D8D43 /* LXModuleTableView.swift in Sources */,
 				646C5A711FA36E8200A53177 /* ViewController.swift in Sources */,
 				646C5A9D1FA36F3F00A53177 /* LXModuleViewControllerDelegate.swift in Sources */,
 				646C5A6F1FA36E8200A53177 /* AppDelegate.swift in Sources */,
+				64923A051FA76DAE000D8D43 /* LXModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

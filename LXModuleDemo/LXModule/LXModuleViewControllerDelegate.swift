@@ -8,51 +8,28 @@
 
 import UIKit
 
-class LXModule: NSObject {
-    
+enum LXModuleStatus {
+    case header
+    case page(index: Int)
 }
 
-extension LXModule: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-}
-
-extension LXModule: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
+class LXModuleModel {
+    var sectionRangeInTableView: Range<Int>!
+    var status: LXModuleStatus
+    var module: LXModule
     
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    init(module: LXModule, status: LXModuleStatus) {
+        self.module = module
+        self.status = status
     }
 }
 
 class LXSectionModel {
-    var module: LXModule!
+    var moduleModel: LXModuleModel
     var sectionIndexInModule: Int
-    init(module: LXModule, sectionIndexInModule: Int) {
-        self.module = module
+    
+    init(moduleModel: LXModuleModel, sectionIndexInModule: Int) {
+        self.moduleModel = moduleModel
         self.sectionIndexInModule = sectionIndexInModule
     }
-}
-
-class LXModuleModel {
-    var sectionIndexInTableView: Int = 0
-    var module: LXModule!
-
-    init(module: LXModule) {
-        self.module = module
-    }
-}
-
-protocol LXModuleViewControllerDelegate: UITableViewDelegate, UITableViewDataSource {
-//    var tableView: UITableView! { get set }
-//    var moduleModels: [LXModuleModel]! { get set }
-    func modules() -> (header :[LXModule], pages: [[LXModule]])
-    func setup()
 }
