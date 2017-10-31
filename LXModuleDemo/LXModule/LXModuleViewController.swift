@@ -9,9 +9,11 @@
 import UIKit
 import RxCocoa
 
+let screenWidth = UIScreen.main.bounds.width
+let screenHeight = UIScreen.main.bounds.height
+
 class LXModuleViewController: UIViewController {
-    
-        
+
     func modules() -> (header :[LXModule], pages: [[LXModule]]) {
         return ([], [])
     }
@@ -38,39 +40,35 @@ class LXModuleViewController: UIViewController {
         
         self.setupTableViewDataSource()
     
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
         let pageCount = self.pageCount
         self.scrollView = UIScrollView()
+        self.scrollView.delegate = self
         self.scrollView.frame = UIScreen.main.bounds
         self.scrollView.backgroundColor = UIColor.yellow
         self.scrollView.isPagingEnabled = true
-        //        self.scrollView
-        self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(pageCount), height: screenHeight)
+        self.scrollView.bounces = false
+        
+        let initPageCount = CGFloat(min(2, pageCount))
+        
+        self.scrollView.contentSize = CGSize(width: screenWidth * initPageCount, height: screenHeight)
         self.view.addSubview(self.scrollView)
         
+        self.currentPage = 0
         self.tableViews = []
-        for index in 0..<pageCount {
-            let pageTableView = LXModuleTableView()
-            pageTableView.pageIndex = index
-            pageTableView.delegate = self
-            pageTableView.dataSource = self
-            pageTableView.frame = CGRect(x: screenWidth * CGFloat(index), y: 0, width: screenWidth, height: screenHeight)
-            self.scrollView.addSubview(pageTableView)
-            self.tableViews.append(pageTableView)
-        }
+        self.addTableView(page: 0) // 添加第一个
+        let _ = self.addTableViewIfNeed()
         
-        self.tableViews[0].rx.observe(CGSize.self, "contentSize").subscribe(onNext: { (size) in
+        let _ = self.tableViews[0].rx.observe(CGSize.self, "contentSize").subscribe(onNext: { (size) in
             for sectionIndex in 0..<self.headerSectionModels.count {
                 let sectionModel = self.headerSectionModels[sectionIndex]
                 if sectionModel.moduleModel.module is LXModule4 {
-                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)))
+//                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)))
                     
                     self.hoverCell = (sectionModel.moduleModel.module as! LXModule4).cells
                     self.hoverView = (sectionModel.moduleModel.module as! LXModule4).containerView
+                    self.hoverHeight = self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)).origin.y
                     
-                    	self.hoverHeight = self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)).origin.y
-                    
+                    // 预先加载第二个
                     for index in 1..<self.tableViews.count {
                         self.tableViews[index].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
                     }
@@ -85,31 +83,42 @@ class LXModuleViewController: UIViewController {
         }
     }
     
+    func addTableViewIfNeed() -> Bool {
+        let nextPage = self.currentPage + 1
+        if nextPage >= self.tableViews.count && nextPage < self.pageCount {
+            self.addTableView(page: nextPage)
+            return true
+        }
+        return false
+    }
+    
+    func addTableView(page: Int) {
+        let pageTableView = LXModuleTableView()
+        pageTableView.pageIndex = page
+        pageTableView.delegate = self
+        pageTableView.dataSource = self
+        pageTableView.frame = CGRect(x: screenWidth * CGFloat(page), y: 0, width: screenWidth, height: screenHeight)
+        self.tableViews.append(pageTableView)
+        self.scrollView.addSubview(pageTableView)
+        pageTableView.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+        self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(page + 1), height: screenHeight)
+    }
+    
     func offsetObserve(_ tableView: LXModuleTableView) {
-        tableView.rx.contentOffset.subscribe(onNext: { (point) in
+        let _ = tableView.rx.contentOffset.subscribe(onNext: { (point) in
             print(point)
             if point.y > self.hoverHeight && !self.isHover {
                 self.scrollView.isScrollEnabled = true
                 print ("悬浮")
                 self.isHover = true
                 self.view.addSubview(self.hoverView)
-            } else if point.y < self.hoverHeight && self.isHover {
+            } else if point.y < self.hoverHeight && self.isHover && self.hoverCell.cells[tableView.pageIndex] != nil {
                 self.scrollView.isScrollEnabled = false
                 print ("取消悬浮")
                 self.hoverCell.cells[tableView.pageIndex]!.addSubview(self.hoverView)
                 self.isHover = false
             }
         }, onError: nil, onCompleted: nil, onDisposed: nil)
-    }
-    
-    func pageIndex(_ tableView: UITableView) -> Int {
-        for index in 0..<self.tableViews.count {
-            if tableView == self.tableViews[index] {
-                return index
-            }
-        }
-        assert(false, "error")
-        return 0
     }
     
     func generateModuleModels(modules: [LXModule], status: LXModuleStatus) -> [LXModuleModel] {
@@ -182,6 +191,29 @@ class LXModuleViewController: UIViewController {
             sectionModel = self.pagesSectionModels[currentPage][section - self.headerSectionModels.count]
         }
         return sectionModel
+    }
+}
+
+extension LXModuleViewController: UIScrollViewDelegate {
+    
+    func determinCurrentPage(scrollView: UIScrollView) {
+        let offsetX = scrollView.contentOffset.x
+        self.currentPage = Int(offsetX / screenWidth)
+        if self.addTableViewIfNeed() {
+            self.offsetObserve(self.tableViews.last!)
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate && scrollView == self.scrollView {
+            self.determinCurrentPage(scrollView: scrollView)
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == self.scrollView {
+            self.determinCurrentPage(scrollView: scrollView)
+        }
     }
 }
 

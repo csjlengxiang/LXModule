@@ -89,11 +89,11 @@ class LXModule4: LXModule {
 
 class LXModule1: LXModule {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 15
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 3
     }
     
     
