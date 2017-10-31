@@ -172,21 +172,22 @@ class LXModuleViewController: UIViewController {
             self.pagesSectionModels.append(pageSectionModels)
         }
     }
-
-}
-
-extension LXModuleViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        self.currentPage = self.pageIndex(tableView)
-        
-        let section = indexPath.section
+    
+    func sectionModel(tableView: UITableView, section: Int) -> LXSectionModel {
+        let currentPage = (tableView as! LXModuleTableView).pageIndex
         var sectionModel: LXSectionModel!
         if section < self.headerSectionModels.count {
             sectionModel = self.headerSectionModels[section]
         } else {
-            sectionModel = self.pagesSectionModels[self.currentPage][section - self.headerSectionModels.count]
+            sectionModel = self.pagesSectionModels[currentPage][section - self.headerSectionModels.count]
         }
+        return sectionModel
+    }
+}
+
+extension LXModuleViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let sectionModel = self.sectionModel(tableView: tableView, section: indexPath.section)
         let moduleIndexPath = IndexPath(row: indexPath.row, section: sectionModel.sectionIndexInModule)
         return sectionModel.moduleModel.module.tableView(tableView, heightForRowAt: moduleIndexPath)
     }
@@ -194,30 +195,17 @@ extension LXModuleViewController: UITableViewDelegate {
 
 extension LXModuleViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.currentPage = self.pageIndex(tableView)
-        return self.headerSectionModels.count + self.pagesSectionModels[self.currentPage].count
+        let currentPage = (tableView as! LXModuleTableView).pageIndex
+        return self.headerSectionModels.count + self.pagesSectionModels[currentPage].count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.currentPage = self.pageIndex(tableView)
-        var sectionModel: LXSectionModel!
-        if section < self.headerSectionModels.count {
-            sectionModel = self.headerSectionModels[section]
-        } else {
-            sectionModel = self.pagesSectionModels[self.currentPage][section - self.headerSectionModels.count]
-        }
+        let sectionModel = self.sectionModel(tableView: tableView, section: section)
         return sectionModel.moduleModel.module.tableView(tableView, numberOfRowsInSection:sectionModel.sectionIndexInModule)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        self.currentPage = self.pageIndex(tableView)
-        let section = indexPath.section
-        var sectionModel: LXSectionModel!
-        if section < self.headerSectionModels.count {
-            sectionModel = self.headerSectionModels[section]
-        } else {
-            sectionModel = self.pagesSectionModels[self.currentPage][section - self.headerSectionModels.count]
-        }
+        let sectionModel = self.sectionModel(tableView: tableView, section: indexPath.section)
         let moduleIndexPath = IndexPath(row: indexPath.row, section: sectionModel.sectionIndexInModule)
         return sectionModel.moduleModel.module.tableView(tableView, cellForRowAt: moduleIndexPath)
     }
