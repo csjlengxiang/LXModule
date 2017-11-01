@@ -101,7 +101,8 @@ class LXModule1: LXModule {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "LXModule1 \(indexPath.section) - \(indexPath.row)")
+        let page = (tableView as! LXModuleTableView).pageIndex
+        cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
         cell.backgroundColor = UIColor.gray
         return cell
     }
@@ -120,7 +121,8 @@ class LXModule2: LXModule {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "LXModule2 \(indexPath.section) - \(indexPath.row)")
+        let page = (tableView as! LXModuleTableView).pageIndex
+        cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
         cell.backgroundColor = UIColor.darkGray
         return cell
     }
@@ -137,7 +139,8 @@ class LXModule3: LXModule {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Cell(style: .default, reuseIdentifier: nil)
-        cell.setTitle(title: "LXModule3 \(indexPath.section) - \(indexPath.row)")
+        let page = (tableView as! LXModuleTableView).pageIndex
+        cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
         cell.backgroundColor = UIColor.lightGray
         return cell
     }

@@ -45,7 +45,6 @@ class LXModuleViewController: UIViewController {
         
         self.setupTableViewDataSource()
     
-//        let pageCount = self.pageCount
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
         self.scrollView.frame = UIScreen.main.bounds
