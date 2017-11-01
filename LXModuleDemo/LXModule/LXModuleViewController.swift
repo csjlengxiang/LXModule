@@ -123,7 +123,7 @@ class LXModuleViewController: UIViewController {
     
     func generateModuleModels(modules: [LXModule], status: LXModuleStatus) -> [LXModuleModel] {
         return modules.map({ (module) -> LXModuleModel in
-            return LXModuleModel(module: module, status: .header)
+            return LXModuleModel(module: module, status: status)
         })
     }
     
