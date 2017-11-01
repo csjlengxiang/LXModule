@@ -8,6 +8,7 @@
 
 import UIKit
 import RxCocoa
+import RxSwift
 
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
@@ -21,10 +22,14 @@ class LXModuleViewController: UIViewController {
     var scrollView: UIScrollView!
     var pageCount: Int = 0
     var tableView: UITableView! = UITableView()
-    var tableViews: [LXModuleTableView]!
+    var tableViewsCollection: [Int: LXModuleTableView] = [:]
     var headerSectionModels: [LXSectionModel]!
     var pagesSectionModels: [[LXSectionModel]]!
     
+    var dispose: Disposable?
+    
+    var minPage: Int = 0
+    var maxPage: Int = 0
     var currentPage: Int = 0
     var sectionCount: Int = 0
 
@@ -40,7 +45,7 @@ class LXModuleViewController: UIViewController {
         
         self.setupTableViewDataSource()
     
-        let pageCount = self.pageCount
+//        let pageCount = self.pageCount
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
         self.scrollView.frame = UIScreen.main.bounds
@@ -48,45 +53,76 @@ class LXModuleViewController: UIViewController {
         self.scrollView.isPagingEnabled = true
         self.scrollView.bounces = false
         
-        let initPageCount = CGFloat(min(2, pageCount))
-        
-        self.scrollView.contentSize = CGSize(width: screenWidth * initPageCount, height: screenHeight)
         self.view.addSubview(self.scrollView)
         
-        self.currentPage = 0
-        self.tableViews = []
-        self.addTableView(page: 0) // 添加第一个
-        let _ = self.addTableViewIfNeed()
+        self.currentPage = 2
+        self.minPage = 2
+        self.maxPage = 2
         
-        let _ = self.tableViews[0].rx.observe(CGSize.self, "contentSize").subscribe(onNext: { (size) in
-            for sectionIndex in 0..<self.headerSectionModels.count {
-                let sectionModel = self.headerSectionModels[sectionIndex]
-                if sectionModel.moduleModel.module is LXModule4 {
-//                    print (self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)))
-                    
-                    self.hoverCell = (sectionModel.moduleModel.module as! LXModule4).cells
-                    self.hoverView = (sectionModel.moduleModel.module as! LXModule4).containerView
-                    self.hoverHeight = self.tableViews[0].rectForRow(at: IndexPath(row: 0, section: sectionIndex)).origin.y
-                    
-                    // 预先加载第二个
-                    for index in 1..<self.tableViews.count {
-                        self.tableViews[index].contentOffset = CGPoint(x: 0, y: self.hoverHeight)
-                    }
-                }
-            }
-        }, onError: nil, onCompleted: nil, onDisposed: nil)
+        self.loadPage(currentPage: self.currentPage)
         
         self.scrollView.isScrollEnabled = false
         
-        for tableView in self.tableViews {
+        for tableView in self.tableViewsCollection.values {
             self.offsetObserve(tableView)
         }
     }
     
-    func addTableViewIfNeed() -> Bool {
-        let nextPage = self.currentPage + 1
-        if nextPage >= self.tableViews.count && nextPage < self.pageCount {
+    func loadPage(currentPage: Int) {
+        // 清空
+        for tableView in self.tableViewsCollection.values {
+            tableView.removeFromSuperview()
+        }
+            
+        self.addTableView(page: currentPage) // 添加第一个
+        let _ = self.addNextTableViewIfNeed(currentPage: currentPage)
+        let _ = self.addPreTableViewIfNeed(currentPage: currentPage)
+
+        if self.headerSectionModels.last!.moduleModel.module is LXModule4 {
+            (self.headerSectionModels.last!.moduleModel.module as! LXModule4).isFirstLoad = false
+            (self.headerSectionModels.last!.moduleModel.module as! LXModule4).FirstLoadPage = currentPage
+        }
+        self.scrollView.contentOffset = CGPoint(x: screenWidth * CGFloat(currentPage), y: 0)
+        
+        self.dispose?.dispose()
+        self.dispose = self.tableViewsCollection[currentPage]!.rx.observe(CGSize.self, "contentSize").subscribe(onNext: { (size) in
+            let sectionModel = self.headerSectionModels.last!
+            if sectionModel.moduleModel.module is LXModule4 {
+                
+                self.hoverCell = (sectionModel.moduleModel.module as! LXModule4).cells
+                self.hoverView = (sectionModel.moduleModel.module as! LXModule4).containerView
+                
+                self.hoverCell.cells[currentPage]?.addSubview(self.hoverView)
+                
+                self.hoverHeight = self.tableViewsCollection[currentPage]!.rectForRow(at: IndexPath(row: 0, section: self.headerSectionModels.count - 1)).origin.y
+                
+                // 预先加载第二个
+                for tableView in self.tableViewsCollection.values {
+                    if tableView == self.tableViewsCollection[currentPage] {
+                        continue
+                    } else {
+                        tableView.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+                    }
+                }
+            }
+        }, onError: nil, onCompleted: nil, onDisposed: nil)
+    }
+    
+    func addNextTableViewIfNeed(currentPage: Int) -> Bool {
+        let nextPage = currentPage + 1
+        if nextPage > self.maxPage && nextPage < self.pageCount {
+            self.maxPage = self.maxPage + 1
             self.addTableView(page: nextPage)
+            return true
+        }
+        return false
+    }
+    
+    func addPreTableViewIfNeed(currentPage: Int) -> Bool {
+        let prePage = currentPage - 1
+        if prePage < self.minPage && prePage >= 0 {
+            self.minPage = self.minPage - 1
+            self.addTableView(page: prePage)
             return true
         }
         return false
@@ -98,10 +134,11 @@ class LXModuleViewController: UIViewController {
         pageTableView.delegate = self
         pageTableView.dataSource = self
         pageTableView.frame = CGRect(x: screenWidth * CGFloat(page), y: 0, width: screenWidth, height: screenHeight)
-        self.tableViews.append(pageTableView)
+        
+        self.tableViewsCollection[page] = pageTableView
         self.scrollView.addSubview(pageTableView)
         pageTableView.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
-        self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(page + 1), height: screenHeight)
+        self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(self.maxPage + 1), height: screenHeight)
     }
     
     func offsetObserve(_ tableView: LXModuleTableView) {
@@ -199,8 +236,26 @@ extension LXModuleViewController: UIScrollViewDelegate {
     func determinCurrentPage(scrollView: UIScrollView) {
         let offsetX = scrollView.contentOffset.x
         self.currentPage = Int(offsetX / screenWidth)
-        if self.addTableViewIfNeed() {
-            self.offsetObserve(self.tableViews.last!)
+        if self.addNextTableViewIfNeed(currentPage: self.currentPage) {
+            self.offsetObserve(self.tableViewsCollection[self.currentPage + 1]!)
+            print("load next \(self.currentPage + 1)")
+        }
+        if self.addPreTableViewIfNeed(currentPage: self.currentPage) {
+            self.offsetObserve(self.tableViewsCollection[self.currentPage - 1]!)
+            print("load pree \(self.currentPage - 1)")
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.scrollView {
+            let offsetX = scrollView.contentOffset.x
+            if offsetX <= screenWidth * CGFloat(self.minPage) {
+                scrollView.contentOffset.x = screenWidth * CGFloat(self.minPage)
+                print ("range min")
+            } else if offsetX >= screenWidth * CGFloat(self.maxPage) {
+                scrollView.contentOffset.x = screenWidth * CGFloat(self.maxPage)
+                print ("range max")
+            }
         }
     }
     

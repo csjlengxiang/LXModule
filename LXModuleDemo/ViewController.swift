@@ -44,6 +44,7 @@ class LXModule4: LXModule {
     var cells: CellCollection!
     
     var isFirstLoad: Bool = false
+    var FirstLoadPage: Int = 0
     
     override init() {
         
@@ -69,7 +70,7 @@ class LXModule4: LXModule {
     
     override func tableView(_ _tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableView = _tableView as! LXModuleTableView
-        
+
         let cell: UITableViewCell!
         let index = tableView.pageIndex
         if self.cells.cells[index] != nil {
@@ -79,7 +80,7 @@ class LXModule4: LXModule {
             cell.backgroundColor = UIColor.green
             self.cells.cells[index] = cell
         }
-        if index == 0 && !self.isFirstLoad {
+        if !self.isFirstLoad && index == self.FirstLoadPage {
             self.isFirstLoad = true
             cell.addSubview(self.containerView)
         }
