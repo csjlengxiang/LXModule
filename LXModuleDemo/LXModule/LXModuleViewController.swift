@@ -20,11 +20,12 @@ class LXModuleViewController: UIViewController {
     }
     
     var scrollView: UIScrollView!
-    var pageCount: Int = 0
+    var header: [LXModule]!
+    var pages: [[LXModule]]!
     var tableView: UITableView! = UITableView()
     var tableViewsCollection: [Int: LXModuleTableView] = [:]
     var headerSectionModels: [LXSectionModel]!
-    var pagesSectionModels: [[LXSectionModel]]!
+    var pagesSectionModelsCollection: [Int: [LXSectionModel]] = [:]
     
     var dispose: Disposable?
     
@@ -43,8 +44,6 @@ class LXModuleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupTableViewDataSource()
-    
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
         self.scrollView.frame = UIScreen.main.bounds
@@ -54,9 +53,14 @@ class LXModuleViewController: UIViewController {
         
         self.view.addSubview(self.scrollView)
         
+        // load
+        let (header, pages) = self.modules()
+        self.header = header
+        self.pages = pages
+        
+        self.headerSectionModels = self.setupHeaderDataSource(header: self.header)
+        
         self.currentPage = 2
-        self.minPage = 2
-        self.maxPage = 2
         
         self.loadPage(currentPage: self.currentPage)
         
@@ -67,12 +71,18 @@ class LXModuleViewController: UIViewController {
         }
     }
     
+    // 刷新
     func loadPage(currentPage: Int) {
-        // 清空
+        self.minPage = currentPage
+        self.maxPage = currentPage
+        // 清空tableview
         for tableView in self.tableViewsCollection.values {
             tableView.removeFromSuperview()
         }
-            
+        self.tableViewsCollection.removeAll()
+        // 清空数据
+        self.pagesSectionModelsCollection.removeAll()
+        
         self.addTableView(page: currentPage) // 添加第一个
         let _ = self.addNextTableViewIfNeed(currentPage: currentPage)
         let _ = self.addPreTableViewIfNeed(currentPage: currentPage)
@@ -95,7 +105,6 @@ class LXModuleViewController: UIViewController {
                 
                 self.hoverHeight = self.tableViewsCollection[currentPage]!.rectForRow(at: IndexPath(row: 0, section: self.headerSectionModels.count - 1)).origin.y
                 
-                // 预先加载第二个
                 for tableView in self.tableViewsCollection.values {
                     if tableView == self.tableViewsCollection[currentPage] {
                         continue
@@ -109,7 +118,7 @@ class LXModuleViewController: UIViewController {
     
     func addNextTableViewIfNeed(currentPage: Int) -> Bool {
         let nextPage = currentPage + 1
-        if nextPage > self.maxPage && nextPage < self.pageCount {
+        if nextPage > self.maxPage && nextPage < self.pages.count {
             self.maxPage = self.maxPage + 1
             self.addTableView(page: nextPage)
             return true
@@ -128,6 +137,8 @@ class LXModuleViewController: UIViewController {
     }
     
     func addTableView(page: Int) {
+        self.setupTableViewDataSource(currentPage: page)
+        // tableView
         let pageTableView = LXModuleTableView()
         pageTableView.pageIndex = page
         pageTableView.delegate = self
@@ -171,51 +182,36 @@ class LXModuleViewController: UIViewController {
         }
     }
     
-    func setupTableViewDataSource() {
-        let (header, pages) = self.modules()
-        self.pageCount = pages.count
-        let headerModuleModels = self.generateModuleModels(modules: header, status: .header)
-        let headerSectionEnd = self.fillModuleModelsRange(lowerBound: 0, moduleModels: headerModuleModels)
-
-        var pagesModuleModels: [[LXModuleModel]] = []
-        var pagesSectionEnd: [Int] = []
-        for index in 0..<pages.count {
-            let page = pages[index]
-            let pageModuleModels = self.generateModuleModels(modules: page, status: .page(index: index))
-            let pageSectionCount = self.fillModuleModelsRange(lowerBound: headerSectionEnd, moduleModels: pageModuleModels)
-            pagesModuleModels.append(pageModuleModels)
-            pagesSectionEnd.append(pageSectionCount)
-        }
-        
-        self.headerSectionModels = []
+    func setupHeaderDataSource(header: [LXModule]) -> [LXSectionModel] {
+        return self.setupModuleDataSource(modules: header, status: .header, lowerBound: 0)
+    }
+    
+    func setupPageDataSource(page: [LXModule], pageIndex: Int, lowerBound: Int) -> [LXSectionModel] {
+        return self.setupModuleDataSource(modules: page, status: .page(index: pageIndex), lowerBound: lowerBound)
+    }
+    
+    func setupModuleDataSource(modules: [LXModule], status: LXModuleStatus, lowerBound: Int) -> [LXSectionModel] {
+        let moduleModels = self.generateModuleModels(modules: modules, status: status)
+        let sectionEnd = self.fillModuleModelsRange(lowerBound: lowerBound, moduleModels: moduleModels)
+        var sectionModels: [LXSectionModel] = []
         var moduleModel: LXModuleModel!
         var index = 0
-        for sectionIndex in 0..<headerSectionEnd {
-            if index < headerModuleModels.count && sectionIndex >= headerModuleModels[index].sectionRangeInTableView.lowerBound {
-                moduleModel = headerModuleModels[index]
+        for sectionIndex in lowerBound..<sectionEnd {
+            if index < moduleModels.count && sectionIndex >= moduleModels[index].sectionRangeInTableView.lowerBound {
+                moduleModel = moduleModels[index]
                 index = index + 1
             }
-            let sectionModel = LXSectionModel(moduleModel: moduleModel, sectionIndexInModule: sectionIndex - headerModuleModels[index - 1].sectionRangeInTableView.lowerBound)
-            self.headerSectionModels.append(sectionModel)
+            let sectionModel = LXSectionModel(moduleModel: moduleModel, sectionIndexInModule: sectionIndex - moduleModels[index - 1].sectionRangeInTableView.lowerBound)
+            sectionModels.append(sectionModel)
         }
+        return sectionModels
+    }
+    
+    func setupTableViewDataSource(currentPage: Int) {
         
-        self.pagesSectionModels = []
-        
-        for pageIndex in 0..<pagesModuleModels.count {
-            let pageModuleModels = pagesModuleModels[pageIndex]
-            let pageSectionCount = pagesSectionEnd[pageIndex]
-            var index = 0
-            var pageSectionModels: [LXSectionModel] = []
-            for sectionIndex in headerSectionEnd..<pageSectionCount {
-                if index < pageModuleModels.count && sectionIndex >= pageModuleModels[index].sectionRangeInTableView.lowerBound {
-                    moduleModel = pageModuleModels[index]
-                    index = index + 1
-                }
-                let sectionModel = LXSectionModel(moduleModel: moduleModel, sectionIndexInModule: sectionIndex - pageModuleModels[index - 1].sectionRangeInTableView.lowerBound)
-                pageSectionModels.append(sectionModel)
-            }
-            self.pagesSectionModels.append(pageSectionModels)
-        }
+        print ("load datasource \(currentPage)")
+        let page = self.pages[currentPage]
+        self.pagesSectionModelsCollection[currentPage] = self.setupPageDataSource(page: page, pageIndex: currentPage, lowerBound: self.headerSectionModels.count)
     }
     
     func sectionModel(tableView: UITableView, section: Int) -> LXSectionModel {
@@ -224,7 +220,7 @@ class LXModuleViewController: UIViewController {
         if section < self.headerSectionModels.count {
             sectionModel = self.headerSectionModels[section]
         } else {
-            sectionModel = self.pagesSectionModels[currentPage][section - self.headerSectionModels.count]
+            sectionModel = self.pagesSectionModelsCollection[currentPage]![section - self.headerSectionModels.count]
         }
         return sectionModel
     }
@@ -282,7 +278,7 @@ extension LXModuleViewController: UITableViewDelegate {
 extension LXModuleViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         let currentPage = (tableView as! LXModuleTableView).pageIndex
-        return self.headerSectionModels.count + self.pagesSectionModels[currentPage].count
+        return self.headerSectionModels.count + self.pagesSectionModelsCollection[currentPage]!.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
