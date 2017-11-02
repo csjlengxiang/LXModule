@@ -58,20 +58,17 @@ class LXModuleViewController: UIViewController {
         self.header = header
         self.pages = pages
         
-        
         self.currentPage = 2
-        
         self.loadPage(currentPage: self.currentPage)
-        
-        self.scrollView.isScrollEnabled = false
-        
-        for tableView in self.tableViewsCollection.values {
-            self.offsetObserve(tableView)
-        }
     }
     
     // 刷新
     func loadPage(currentPage: Int) {
+        self.scrollView.isScrollEnabled = false
+        
+        self.hoverHeight = 0
+        self.isHover = false
+        
         self.minPage = currentPage
         self.maxPage = currentPage
         // 清空tableview
@@ -90,6 +87,7 @@ class LXModuleViewController: UIViewController {
         if self.headerSectionModels.last!.moduleModel.module is LXModule4 {
             (self.headerSectionModels.last!.moduleModel.module as! LXModule4).isFirstLoad = false
             (self.headerSectionModels.last!.moduleModel.module as! LXModule4).FirstLoadPage = currentPage
+            (self.headerSectionModels.last!.moduleModel.module as! LXModule4).cells = CellCollection()
         }
         self.scrollView.contentOffset = CGPoint(x: screenWidth * CGFloat(currentPage), y: 0)
         
@@ -100,8 +98,6 @@ class LXModuleViewController: UIViewController {
                 
                 self.hoverCell = (sectionModel.moduleModel.module as! LXModule4).cells
                 self.hoverView = (sectionModel.moduleModel.module as! LXModule4).containerView
-                
-                self.hoverCell.cells[currentPage]?.addSubview(self.hoverView)
                 
                 self.hoverHeight = self.tableViewsCollection[currentPage]!.rectForRow(at: IndexPath(row: 0, section: self.headerSectionModels.count - 1)).origin.y
                 
@@ -114,6 +110,9 @@ class LXModuleViewController: UIViewController {
                 }
             }
         }, onError: nil, onCompleted: nil, onDisposed: nil)
+        for tableView in self.tableViewsCollection.values {
+            self.offsetObserve(tableView)
+        }
     }
     
     func addNextTableViewIfNeed(currentPage: Int) -> Bool {

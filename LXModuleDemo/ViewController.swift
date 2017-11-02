@@ -41,14 +41,12 @@ class LXModule4: LXModule {
     
     var containerView: UIView!
     
-    var cells: CellCollection!
+    var cells: CellCollection = CellCollection()
     
     var isFirstLoad: Bool = false
     var FirstLoadPage: Int = 0
     
     override init() {
-        
-        self.cells = CellCollection()
         containerView = UIView()
         containerView.backgroundColor = UIColor.red
         containerView.alpha = 0.5
@@ -150,6 +148,17 @@ class ViewController: LXModuleViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let btn = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
+        btn.backgroundColor = UIColor.black
+        self.view.addSubview(btn)
+        
+        let _ = btn.rx.tap.subscribe(onNext: { (_) in
+            
+            self.currentPage = (self.currentPage + 4) % self.pages.count
+            self.loadPage(currentPage: self.currentPage)
+            
+        }, onError: nil, onCompleted: nil, onDisposed: nil)
     }
     
     //   [1,2,3] [1,2,3]
