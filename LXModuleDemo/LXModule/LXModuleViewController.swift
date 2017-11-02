@@ -58,7 +58,6 @@ class LXModuleViewController: UIViewController {
         self.header = header
         self.pages = pages
         
-        self.headerSectionModels = self.setupHeaderDataSource(header: self.header)
         
         self.currentPage = 2
         
@@ -83,6 +82,7 @@ class LXModuleViewController: UIViewController {
         // 清空数据
         self.pagesSectionModelsCollection.removeAll()
         
+        self.headerSectionModels = self.setupHeaderDataSource(header: self.header)
         self.addTableView(page: currentPage) // 添加第一个
         let _ = self.addNextTableViewIfNeed(currentPage: currentPage)
         let _ = self.addPreTableViewIfNeed(currentPage: currentPage)
