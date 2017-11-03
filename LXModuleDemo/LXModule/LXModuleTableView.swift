@@ -10,4 +10,8 @@ import UIKit
 
 class LXModuleTableView: UITableView {
     var pageIndex: Int = 0
+    
+    deinit {
+        print ("LXModuleTableView deinit")
+    }
 }

@@ -155,10 +155,20 @@ class ViewController: LXModuleViewController {
         
         let _ = btn.rx.tap.subscribe(onNext: { (_) in
             
-            self.currentPage = (self.currentPage + 4) % self.pages.count
+            self.currentPage = (self.currentPage + 1) % self.pages.count
             self.loadPage(currentPage: self.currentPage)
             
         }, onError: nil, onCompleted: nil, onDisposed: nil)
+        
+
+        
+//        for i in 0...1000 {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 * Double(i) ) {
+//                print ("-------------\(i)")
+//                self.currentPage = (self.currentPage + 1) % self.pages.count
+//                self.loadPage(currentPage: self.currentPage)
+//            }
+//        }
     }
     
     //   [1,2,3] [1,2,3]
