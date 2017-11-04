@@ -87,6 +87,11 @@ class LXModule4: LXModule {
 }
 
 class LXModule1: LXModule {
+    
+    override func setupModule() {
+        self.register(cellClass: Cell.self, forCellReuseIdentifier: NSStringFromClass(Cell.self))
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -98,7 +103,8 @@ class LXModule1: LXModule {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = Cell(style: .default, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(Cell.self)) as! Cell
+        
         let page = (tableView as! LXModuleTableView).pageIndex
         cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
         cell.backgroundColor = UIColor.gray
@@ -107,6 +113,11 @@ class LXModule1: LXModule {
 }
 
 class LXModule2: LXModule {
+    
+    override func setupModule() {
+        self.register(cellClass: Cell.self, forCellReuseIdentifier: NSStringFromClass(Cell.self))
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
@@ -118,15 +129,21 @@ class LXModule2: LXModule {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = Cell(style: .default, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(Cell.self)) as! Cell
+
         let page = (tableView as! LXModuleTableView).pageIndex
-        cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
+        cell.setTitle(title: "page \(page) LXModule2 \(indexPath.section) - \(indexPath.row)")
         cell.backgroundColor = UIColor.darkGray
         return cell
     }
 }
 
 class LXModule3: LXModule {
+    
+    override func setupModule() {
+        self.register(cellClass: Cell.self, forCellReuseIdentifier: NSStringFromClass(Cell.self))
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
@@ -136,9 +153,10 @@ class LXModule3: LXModule {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = Cell(style: .default, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(Cell.self)) as! Cell
+
         let page = (tableView as! LXModuleTableView).pageIndex
-        cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
+        cell.setTitle(title: "page \(page) LXModule3 \(indexPath.section) - \(indexPath.row)")
         cell.backgroundColor = UIColor.lightGray
         return cell
     }
