@@ -8,7 +8,13 @@
 
 import UIKit
 
-class LXModule: NSObject { }
+class LXModule: NSObject {
+    var tableView: UITableView!
+    required override init() {
+        super.init()
+        print ("\(self) init")
+    }
+}
 
 extension LXModule: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

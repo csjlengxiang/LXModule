@@ -46,7 +46,7 @@ class LXModule4: LXModule {
     var isFirstLoad: Bool = false
     var FirstLoadPage: Int = 0
     
-    override init() {
+    required init() {
         containerView = UIView()
         containerView.backgroundColor = UIColor.red
         containerView.alpha = 0.5
@@ -155,7 +155,7 @@ class ViewController: LXModuleViewController {
         
         let _ = btn.rx.tap.subscribe(onNext: { (_) in
             
-            self.currentPage = (self.currentPage + 1) % self.pages.count
+            self.currentPage = (self.currentPage + 1) % self.pagesClass.count
             self.loadPage(currentPage: self.currentPage)
             
         }, onError: nil, onCompleted: nil, onDisposed: nil)
@@ -173,13 +173,17 @@ class ViewController: LXModuleViewController {
     
     //   [1,2,3] [1,2,3]
     // [ [4,5,6] [7,8,9] ]
-    override func modules() -> (header :[LXModule], pages: [[LXModule]]) {
-        return ([LXModule1(), LXModule4()], [[LXModule2(), LXModule3()],
-                                             [LXModule3(), LXModule2()],
-                                             [LXModule2()],
-                                             [LXModule3()],
-                                             [LXModule2(), LXModule2()],
-                                             [LXModule3(), LXModule3()]])
+    override func modulesClass() -> (headerClass: [LXModule.Type], pagesClass: [[LXModule.Type]]) {
+        
+        let headerClass: [LXModule.Type] = [LXModule1.self, LXModule4.self]
+        let pagesClass: [[LXModule.Type]] = [[LXModule2.self, LXModule3.self],
+                                             [LXModule3.self, LXModule2.self],
+                                             [LXModule2.self],
+                                             [LXModule3.self],
+                                             [LXModule2.self, LXModule2.self],
+                                             [LXModule3.self, LXModule3.self]]
+        return (headerClass, pagesClass)
     }
+
 }
 

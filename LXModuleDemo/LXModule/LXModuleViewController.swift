@@ -15,13 +15,19 @@ let screenHeight = UIScreen.main.bounds.height
 
 class LXModuleViewController: UIViewController {
 
-    func modules() -> (header :[LXModule], pages: [[LXModule]]) {
+    func modulesClass() -> (headerClass: [LXModule.Type], pagesClass: [[LXModule.Type]]) {
         return ([], [])
     }
     
     var scrollView: UIScrollView!
-    var header: [LXModule]!
+    var header: [LXModule] = []
     var pages: [[LXModule]]!
+    var pagesCollection: [Int: [LXModule]] = [:]
+    
+    var headerClass: [LXModule.Type]!
+    var pagesClass: [[LXModule.Type]]!
+
+
     var tableView: UITableView! = UITableView()
     var tableViewsCollection: [Int: LXModuleTableView] = [:]
     var headerSectionModels: [LXSectionModel]!
@@ -53,11 +59,10 @@ class LXModuleViewController: UIViewController {
         
         self.view.addSubview(self.scrollView)
         
-        // load
-        let (header, pages) = self.modules()
-        self.header = header
-        self.pages = pages
-        
+        let (headerClass, pagesClass) = self.modulesClass()
+        self.headerClass = headerClass
+        self.pagesClass = pagesClass
+
         self.currentPage = 2
         self.loadPage(currentPage: self.currentPage)
     }
@@ -78,7 +83,7 @@ class LXModuleViewController: UIViewController {
         
         // 清空tableview cell数据，不然强制滚动，会有数据丢失
         
-        self.headerSectionModels = self.setupHeaderDataSource(header: self.header)
+        self.headerSectionModels = self.setupHeaderDataSource(headerClass: self.headerClass)
         
         if self.headerSectionModels.last!.moduleModel.module is LXModule4 {
             (self.headerSectionModels.last!.moduleModel.module as! LXModule4).isFirstLoad = false
@@ -115,8 +120,7 @@ class LXModuleViewController: UIViewController {
 
         // 清空tableview cell数据，不然强制滚动，因为数据被清空，而没有reload,cellforrow会拿到nil数据导致crash
         self.reloadTableViews(range: 0..<self.minPage)
-        self.reloadTableViews(range: (self.maxPage+1)..<self.pages.count)
-        
+        self.reloadTableViews(range: (self.maxPage+1)..<self.pagesClass.count)
     }
 
     func reloadTableViews(range: Range<Int>) {
@@ -131,7 +135,7 @@ class LXModuleViewController: UIViewController {
     
     func addNextTableViewIfNeed(currentPage: Int) -> Bool {
         let nextPage = currentPage + 1
-        if nextPage > self.maxPage && nextPage < self.pages.count {
+        if nextPage > self.maxPage && nextPage < self.pagesClass.count {
             self.addTableView(page: nextPage)
             self.maxPage = nextPage
             self.updateScrollViewSize(maxPage: self.maxPage)
@@ -201,6 +205,15 @@ class LXModuleViewController: UIViewController {
             return upperBound
         }
     }
+
+    func setupHeaderDataSource(headerClass: [LXModule.Type]) -> [LXSectionModel] {
+        if self.header.count <= 0 {
+            self.header = headerClass.map({ (LXModuleClass) -> LXModule in
+                return LXModuleClass.init()
+            })
+        }
+        return self.setupHeaderDataSource(header: self.header)
+    }
     
     func setupHeaderDataSource(header: [LXModule]) -> [LXSectionModel] {
         return self.setupModuleDataSource(modules: header, status: .header, lowerBound: 0)
@@ -226,11 +239,18 @@ class LXModuleViewController: UIViewController {
         }
         return sectionModels
     }
-    
+
+
     func setupTableViewDataSource(currentPage: Int) {
         
         print ("load datasource \(currentPage)")
-        let page = self.pages[currentPage]
+
+        if self.pagesCollection[currentPage] == nil {
+            self.pagesCollection[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
+                return LXModuleClass.init()
+            })
+        }
+        let page = self.pagesCollection[currentPage]!
         self.pagesSectionModelsCollection[currentPage] = self.setupPageDataSource(page: page, pageIndex: currentPage, lowerBound: self.headerSectionModels.count)
     }
     
