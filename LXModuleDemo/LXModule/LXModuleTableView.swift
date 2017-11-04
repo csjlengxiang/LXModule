@@ -14,4 +14,13 @@ class LXModuleTableView: UITableView {
     deinit {
         print ("LXModuleTableView deinit")
     }
+    
+    func addRegisters(header: [LXModule], page: [LXModule]) {
+        let modules = header + page
+        for module in modules {
+            for register in module.registers {
+                self.register(register.0, forCellReuseIdentifier: register.1)
+            }
+        }
+    }
 }

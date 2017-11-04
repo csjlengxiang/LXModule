@@ -165,9 +165,11 @@ class LXModuleViewController: UIViewController {
             // 创建 dataSource
             self.pages[page] = self.pagesClass[page].map({ (LXModuleClass) -> LXModule in
                 let module = LXModuleClass.init()
-                module.tableView = pageTableView
+                module.vc = self
+                module.setupModule()
                 return module
             })
+            pageTableView.addRegisters(header: self.header, page: self.pages[page]!)
             self.pagesSectionModels[page] = self.setupModuleDataSource(modules: self.pages[page]!, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
             // add subview 会调用reloadData
             self.scrollView.addSubview(pageTableView)
@@ -202,7 +204,7 @@ class LXModuleViewController: UIViewController {
 }
 
 // Mark: dataSource
-
+// 未来这部分只会是一个计算模块，无需弄成SectionModel，只使用基本的 LXModule 为参数来计算
 extension LXModuleViewController {
 
     func generateModuleModels(modules: [LXModule], status: LXModuleStatus) -> [LXModuleModel] {
@@ -222,7 +224,10 @@ extension LXModuleViewController {
     func setupHeaderDataSource(headerClass: [LXModule.Type]) -> [LXSectionModel] {
         if self.header.count <= 0 {
             self.header = headerClass.map({ (LXModuleClass) -> LXModule in
-                return LXModuleClass.init()
+                let module = LXModuleClass.init()
+                module.vc = self
+                module.setupModule()
+                return module
             })
         }
         return self.setupModuleDataSource(modules: self.header, status: .header, lowerBound: 0)

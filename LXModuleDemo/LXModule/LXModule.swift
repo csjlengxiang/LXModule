@@ -9,10 +9,19 @@
 import UIKit
 
 class LXModule: NSObject {
-    var tableView: UITableView!
+    var registers: [(AnyClass, String)] = []
+    weak var vc: LXModuleViewController!
     required override init() {
         super.init()
         print ("\(self) init")
+    }
+    
+    func setupModule() {
+        
+    }
+    
+    func register(cellClass: AnyClass, forCellReuseIdentifier: String) {
+        self.registers.append((cellClass, forCellReuseIdentifier))
     }
 }
 

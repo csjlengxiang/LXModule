@@ -29,8 +29,8 @@
       <file leaf-file-name="ViewController.swift" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/ViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2983">
-              <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
+            <state relative-caret-position="422">
+              <caret line="166" column="45" lean-forward="true" selection-start-line="166" selection-start-column="45" selection-end-line="166" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -39,8 +39,8 @@
       <file leaf-file-name="LXModule.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModule.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="33" column="38" lean-forward="true" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+            <state relative-caret-position="627">
+              <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -49,9 +49,30 @@
       <file leaf-file-name="LXModuleViewController.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-876">
-              <caret line="165" column="28" lean-forward="true" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
-              <folding />
+            <state relative-caret-position="3078">
+              <caret line="164" column="28" lean-forward="false" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+              <folding>
+                <marker date="1509779643000" expanded="true" signature="326:7736" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="5433:6781" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="6842:7734" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="7792:10218" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="7889:8030" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="8118:8425" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="8508:8791" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="8906:9740" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="9820:10216" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="10275:11701" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="10337:10710" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="10773:11269" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="11370:11506" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="11578:11699" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="11757:12161" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="11852:12159" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="12219:13284" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="12281:12561" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="12655:12872" ph="{...}" />
+                <marker date="1509779643000" expanded="true" signature="12977:13282" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -177,35 +198,36 @@
       <updated>1509721614021</updated>
       <workItem from="1509721615801" duration="3404000" />
       <workItem from="1509765892267" duration="686000" />
-      <workItem from="1509766848589" duration="7546000" />
+      <workItem from="1509766848589" duration="7734000" />
+      <workItem from="1509793401589" duration="602000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11636000" />
+    <option name="totallyTimeSpent" value="12426000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="52" y="22" width="1868" height="1058" extended-state="6" />
+    <frame x="48" y="22" width="1872" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24893162" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24946466" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40669373" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40669373" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -220,6 +242,59 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewControllerDelegate.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/ViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2983">
+          <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3097">
+          <caret line="165" column="28" lean-forward="true" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
+          <folding>
+            <marker date="1509779643000" expanded="true" signature="326:7736" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="5433:6781" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="6842:7734" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7792:10218" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7889:8030" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8118:8425" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8508:8791" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8906:9740" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="9820:10216" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10275:11701" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10337:10710" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10773:11269" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11370:11506" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11578:11699" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11757:12161" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11852:12159" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12219:13284" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12281:12561" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12655:12872" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12977:13282" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleTableView.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewControllerDelegate.swift">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
@@ -240,7 +315,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1995">
           <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1509779643000" expanded="true" signature="326:7736" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="5433:6781" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="6842:7734" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7792:10218" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7889:8030" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8118:8425" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8508:8791" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8906:9740" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="9820:10216" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10275:11701" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10337:10710" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10773:11269" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11370:11506" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11578:11699" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11757:12161" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11852:12159" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12219:13284" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12281:12561" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12655:12872" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12977:13282" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -256,7 +352,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2888">
           <caret line="152" column="43" lean-forward="false" selection-start-line="152" selection-start-column="43" selection-end-line="152" selection-end-column="43" />
-          <folding />
+          <folding>
+            <marker date="1509779643000" expanded="true" signature="326:7736" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="5433:6781" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="6842:7734" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7792:10218" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7889:8030" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8118:8425" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8508:8791" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8906:9740" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="9820:10216" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10275:11701" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10337:10710" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10773:11269" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11370:11506" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11578:11699" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11757:12161" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11852:12159" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12219:13284" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12281:12561" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12655:12872" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12977:13282" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -286,24 +403,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-876">
-          <caret line="165" column="28" lean-forward="true" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="3078">
+          <caret line="164" column="28" lean-forward="false" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+          <folding>
+            <marker date="1509779643000" expanded="true" signature="326:7736" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="5433:6781" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="6842:7734" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7792:10218" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="7889:8030" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8118:8425" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8508:8791" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="8906:9740" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="9820:10216" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10275:11701" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10337:10710" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="10773:11269" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11370:11506" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11578:11699" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11757:12161" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="11852:12159" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12219:13284" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12281:12561" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12655:12872" ph="{...}" />
+            <marker date="1509779643000" expanded="true" signature="12977:13282" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModule.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="33" column="38" lean-forward="true" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+        <state relative-caret-position="627">
+          <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LXModuleDemo/ViewController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2983">
-          <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
+        <state relative-caret-position="422">
+          <caret line="166" column="45" lean-forward="true" selection-start-line="166" selection-start-column="45" selection-end-line="166" selection-end-column="45" />
           <folding />
         </state>
       </provider>
