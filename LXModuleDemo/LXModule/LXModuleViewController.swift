@@ -20,12 +20,11 @@ class LXModuleViewController: UIViewController {
     }
     
     var scrollView: UIScrollView!
-    var header: [LXModule] = []
-    var pages: [Int: [LXModule]] = [:]
 
     var headerClass: [LXModule.Type]!
     var pagesClass: [[LXModule.Type]]!
-
+    var header: [LXModule] = []
+    var pages: [Int: [LXModule]] = [:]
 
     var tableView: UITableView! = UITableView()
     var tableViews: [Int: LXModuleTableView] = [:]
@@ -35,7 +34,6 @@ class LXModuleViewController: UIViewController {
     var minPage: Int = 0
     var maxPage: Int = 0
     var currentPage: Int = 0
-    var sectionCount: Int = 0
 
     var hoverHeight: CGFloat = 0
     
@@ -135,8 +133,8 @@ class LXModuleViewController: UIViewController {
     func addNextTableViewIfNeed(currentPage: Int) -> Bool {
         let nextPage = currentPage + 1
         if nextPage > self.maxPage && nextPage < self.pagesClass.count {
+            self.maxPage = nextPage // 注意顺序
             self.addTableView(page: nextPage)
-            self.maxPage = nextPage
             self.updateScrollViewSize(maxPage: self.maxPage)
             return true
         }
@@ -146,8 +144,8 @@ class LXModuleViewController: UIViewController {
     func addPreTableViewIfNeed(currentPage: Int) -> Bool {
         let prePage = currentPage - 1
         if prePage < self.minPage && prePage >= 0 {
-            self.addTableView(page: prePage)
             self.minPage = prePage
+            self.addTableView(page: prePage)
             return true
         }
         return false
