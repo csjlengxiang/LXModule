@@ -21,17 +21,16 @@ class LXModuleViewController: UIViewController {
     
     var scrollView: UIScrollView!
     var header: [LXModule] = []
-    var pages: [[LXModule]]!
-    var pagesCollection: [Int: [LXModule]] = [:]
-    
+    var pages: [Int: [LXModule]] = [:]
+
     var headerClass: [LXModule.Type]!
     var pagesClass: [[LXModule.Type]]!
 
 
     var tableView: UITableView! = UITableView()
-    var tableViewsCollection: [Int: LXModuleTableView] = [:]
+    var tableViews: [Int: LXModuleTableView] = [:]
     var headerSectionModels: [LXSectionModel]!
-    var pagesSectionModelsCollection: [Int: [LXSectionModel]] = [:]
+    var pagesSectionModels: [Int: [LXSectionModel]] = [:]
     
     var minPage: Int = 0
     var maxPage: Int = 0
@@ -79,7 +78,7 @@ class LXModuleViewController: UIViewController {
         self.maxPage = currentPage
         self.disposeBag = DisposeBag()
         self.headerSectionModels = []
-        self.pagesSectionModelsCollection.removeAll()
+        self.pagesSectionModels.removeAll()
         
         // 清空tableview cell数据，不然强制滚动，会有数据丢失
         
@@ -98,18 +97,18 @@ class LXModuleViewController: UIViewController {
         self.scrollView.setContentOffset(CGPoint(x: screenWidth * CGFloat(currentPage), y: 0), animated: false)
 //        self.scrollView.contentOffset = CGPoint(x: screenWidth * CGFloat(currentPage), y: 0)
         
-        self.tableViewsCollection[currentPage]!.rx.observe(CGSize.self, "contentSize").subscribe(onNext: { [unowned self](size) in
+        self.tableViews[currentPage]!.rx.observe(CGSize.self, "contentSize").subscribe(onNext: { [unowned self](size) in
             let sectionModel = self.headerSectionModels.last!
             if sectionModel.moduleModel.module is LXModule4 {
                 
                 self.hoverCell = (sectionModel.moduleModel.module as! LXModule4).cells
                 self.hoverView = (sectionModel.moduleModel.module as! LXModule4).containerView
                 
-                self.hoverHeight = self.tableViewsCollection[currentPage]!.rectForRow(at: IndexPath(row: 0, section: self.headerSectionModels.count - 1)).origin.y
+                self.hoverHeight = self.tableViews[currentPage]!.rectForRow(at: IndexPath(row: 0, section: self.headerSectionModels.count - 1)).origin.y
 
                 for page in self.minPage...self.maxPage {
-                    let tableView = self.tableViewsCollection[page]!
-                    if tableView == self.tableViewsCollection[currentPage] {
+                    let tableView = self.tableViews[page]!
+                    if tableView == self.tableViews[currentPage] {
                         continue
                     } else {
                         tableView.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
@@ -125,7 +124,7 @@ class LXModuleViewController: UIViewController {
 
     func reloadTableViews(range: Range<Int>) {
         for page in range.lowerBound..<range.upperBound {
-            self.tableViewsCollection[page]?.reloadData()
+            self.tableViews[page]?.reloadData()
         }
     }
     
@@ -157,20 +156,20 @@ class LXModuleViewController: UIViewController {
     func addTableView(page: Int) {
         self.setupTableViewDataSource(currentPage: page)
         // tableView
-        if self.tableViewsCollection[page] == nil {
+        if self.tableViews[page] == nil {
             let pageTableView = LXModuleTableView()
             pageTableView.pageIndex = page
             pageTableView.delegate = self
             pageTableView.dataSource = self
             pageTableView.frame = CGRect(x: screenWidth * CGFloat(page), y: 0, width: screenWidth, height: screenHeight)
             self.scrollView.addSubview(pageTableView)
-            self.tableViewsCollection[page] = pageTableView
+            self.tableViews[page] = pageTableView
         } else {
             // 注意需要重新加载数据
-            self.tableViewsCollection[page]!.reloadData()
+            self.tableViews[page]!.reloadData()
         }
-        self.tableViewsCollection[page]!.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
-        self.offsetObserve(self.tableViewsCollection[page]!)
+        self.tableViews[page]!.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
+        self.offsetObserve(self.tableViews[page]!)
     }
     
     func offsetObserve(_ tableView: LXModuleTableView) {
@@ -245,13 +244,13 @@ class LXModuleViewController: UIViewController {
         
         print ("load datasource \(currentPage)")
 
-        if self.pagesCollection[currentPage] == nil {
-            self.pagesCollection[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
+        if self.pages[currentPage] == nil {
+            self.pages[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
                 return LXModuleClass.init()
             })
         }
-        let page = self.pagesCollection[currentPage]!
-        self.pagesSectionModelsCollection[currentPage] = self.setupPageDataSource(page: page, pageIndex: currentPage, lowerBound: self.headerSectionModels.count)
+        let page = self.pages[currentPage]!
+        self.pagesSectionModels[currentPage] = self.setupPageDataSource(page: page, pageIndex: currentPage, lowerBound: self.headerSectionModels.count)
     }
     
     func sectionModel(tableView: UITableView, section: Int) -> LXSectionModel {
@@ -260,7 +259,7 @@ class LXModuleViewController: UIViewController {
         if section < self.headerSectionModels.count {
             sectionModel = self.headerSectionModels[section]
         } else {
-            sectionModel = self.pagesSectionModelsCollection[currentPage]![section - self.headerSectionModels.count]
+            sectionModel = self.pagesSectionModels[currentPage]![section - self.headerSectionModels.count]
         }
         return sectionModel
     }
@@ -321,7 +320,7 @@ extension LXModuleViewController: UITableViewDataSource {
         guard currentPage >= self.minPage && currentPage <= self.maxPage else {
             return 0
         }
-        return self.headerSectionModels.count + self.pagesSectionModelsCollection[currentPage]!.count
+        return self.headerSectionModels.count + self.pagesSectionModels[currentPage]!.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
