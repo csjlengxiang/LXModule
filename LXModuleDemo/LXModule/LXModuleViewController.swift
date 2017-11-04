@@ -24,7 +24,7 @@ class LXModuleViewController: UIViewController {
     var headerClass: [LXModule.Type]!
     var pagesClass: [[LXModule.Type]]!
     var header: [LXModule] = []
-    var pages: [Int: [LXModule]] = [:]
+    var pages: [Int: [LXModule]] = [:] // 与 tableViews 具有一致的懒加载周期
 
     var tableView: UITableView! = UITableView()
     var tableViews: [Int: LXModuleTableView] = [:]
@@ -151,19 +151,32 @@ class LXModuleViewController: UIViewController {
     }
     
     func addPage(page: Int) {
-        self.setupPageDataSource(currentPage: page)
-        if self.tableViews[page] == nil {
+
+        print ("load page \(page)")
+
+        if self.pages[page] == nil && self.tableViews[page] == nil {
+            // 创建 tableview
             let pageTableView = LXModuleTableView()
             pageTableView.pageIndex = page
             pageTableView.delegate = self
             pageTableView.dataSource = self
             pageTableView.frame = CGRect(x: screenWidth * CGFloat(page), y: 0, width: screenWidth, height: screenHeight)
-            self.scrollView.addSubview(pageTableView)
             self.tableViews[page] = pageTableView
+            // 创建 dataSource
+            self.pages[page] = self.pagesClass[page].map({ (LXModuleClass) -> LXModule in
+                let module = LXModuleClass.init()
+                module.tableView = pageTableView
+                return module
+            })
+            self.pagesSectionModels[page] = self.setupModuleDataSource(modules: self.pages[page]!, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
+            // add subview 会调用reloadData
+            self.scrollView.addSubview(pageTableView)
+            
         } else {
-            // 注意需要重新加载数据
+            self.pagesSectionModels[page] = self.setupModuleDataSource(modules: self.pages[page]!, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
             self.tableViews[page]!.reloadData()
         }
+
         self.tableViews[page]!.contentOffset = CGPoint(x: 0, y: self.hoverHeight)
         self.offsetObserve(self.tableViews[page]!)
     }
@@ -215,17 +228,6 @@ extension LXModuleViewController {
         return self.setupModuleDataSource(modules: self.header, status: .header, lowerBound: 0)
     }
 
-    func setupPageDataSource(currentPage: Int) {
-        print ("load datasource \(currentPage)")
-        if self.pages[currentPage] == nil {
-            self.pages[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
-                return LXModuleClass.init()
-            })
-        }
-        let page = self.pages[currentPage]!
-        self.pagesSectionModels[currentPage] = self.setupModuleDataSource(modules: page, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
-    }
-
     func setupModuleDataSource(modules: [LXModule], status: LXModuleStatus, lowerBound: Int) -> [LXSectionModel] {
         let moduleModels = self.generateModuleModels(modules: modules, status: status)
         let sectionEnd = self.fillModuleModelsRange(lowerBound: lowerBound, moduleModels: moduleModels)
@@ -261,11 +263,9 @@ extension LXModuleViewController: UIScrollViewDelegate {
         let offsetX = scrollView.contentOffset.x
         self.currentPage = Int(offsetX / screenWidth)
         if self.addNextPageIfNeed(currentPage: self.currentPage) {
-//            self.offsetObserve(self.tableViewsCollection[self.currentPage + 1]!)
             print("load next \(self.currentPage + 1)")
         }
         if self.addPrePageIfNeed(currentPage: self.currentPage) {
-//            self.offsetObserve(self.tableViewsCollection[self.currentPage - 1]!)
             print("load pree \(self.currentPage - 1)")
         }
     }

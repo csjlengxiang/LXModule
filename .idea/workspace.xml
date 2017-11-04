@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0765f0d2-42d1-4148-a3ec-5d867b4e4bf8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LXModuleDemo.xcworkspace/xcuserdata/csj.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/LXModuleDemo.xcworkspace/xcuserdata/csj.xcuserdatad/UserInterfaceState.xcuserstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift" afterPath="$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,15 +26,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewController.swift" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ViewController.swift" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/ViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
+            <state relative-caret-position="2983">
               <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
-              <folding>
-                <marker date="1509771335000" expanded="true" signature="4399:6005" ph="{...}" />
-                <marker date="1509771335000" expanded="true" signature="5427:6002" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,24 +39,18 @@
       <file leaf-file-name="LXModule.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModule.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
+            <state relative-caret-position="454">
               <caret line="33" column="38" lean-forward="true" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
-              <folding>
-                <marker date="1509770358000" expanded="true" signature="167:291" ph="{...}" />
-                <marker date="1509770358000" expanded="true" signature="333:455" ph="{...}" />
-                <marker date="1509770358000" expanded="true" signature="428:453" ph="{...}" />
-                <marker date="1509770358000" expanded="true" signature="600:640" ph="{...}" />
-                <marker date="1509770358000" expanded="true" signature="709:733" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LXModuleViewController.swift" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LXModuleViewController.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="217" column="28" lean-forward="false" selection-start-line="217" selection-start-column="9" selection-end-line="217" selection-end-column="28" />
+            <state relative-caret-position="-876">
+              <caret line="165" column="28" lean-forward="true" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -185,12 +177,12 @@
       <updated>1509721614021</updated>
       <workItem from="1509721615801" duration="3404000" />
       <workItem from="1509765892267" duration="686000" />
-      <workItem from="1509766848589" duration="6408000" />
+      <workItem from="1509766848589" duration="7546000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10498000" />
+    <option name="totallyTimeSpent" value="11636000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="52" y="22" width="1868" height="1058" extended-state="6" />
@@ -205,7 +197,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24946466" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29918864" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40669373" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -284,20 +276,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModule.swift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="33" column="38" lean-forward="true" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
-          <folding>
-            <marker date="1509770358000" expanded="true" signature="167:291" ph="{...}" />
-            <marker date="1509770358000" expanded="true" signature="333:455" ph="{...}" />
-            <marker date="1509770358000" expanded="true" signature="428:453" ph="{...}" />
-            <marker date="1509770358000" expanded="true" signature="600:640" ph="{...}" />
-            <marker date="1509770358000" expanded="true" signature="709:733" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewControllerDelegate.swift">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -306,21 +284,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LXModuleDemo/ViewController.swift">
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
-          <folding>
-            <marker date="1509771335000" expanded="true" signature="4399:6005" ph="{...}" />
-            <marker date="1509771335000" expanded="true" signature="5427:6002" ph="{...}" />
-          </folding>
+        <state relative-caret-position="-876">
+          <caret line="165" column="28" lean-forward="true" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModule.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="217" column="28" lean-forward="false" selection-start-line="217" selection-start-column="9" selection-end-line="217" selection-end-column="28" />
+        <state relative-caret-position="454">
+          <caret line="33" column="38" lean-forward="true" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LXModuleDemo/ViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2983">
+          <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
           <folding />
         </state>
       </provider>
