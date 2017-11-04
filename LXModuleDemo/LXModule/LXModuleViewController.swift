@@ -71,7 +71,6 @@ class LXModuleViewController: UIViewController {
         self.hoverHeight = 0
         self.isHover = false
 
-        
         self.minPage = currentPage
         self.maxPage = currentPage
         self.disposeBag = DisposeBag()
@@ -209,15 +208,7 @@ class LXModuleViewController: UIViewController {
                 return LXModuleClass.init()
             })
         }
-        return self.setupHeaderDataSource(header: self.header)
-    }
-    
-    func setupHeaderDataSource(header: [LXModule]) -> [LXSectionModel] {
-        return self.setupModuleDataSource(modules: header, status: .header, lowerBound: 0)
-    }
-    
-    func setupPageDataSource(page: [LXModule], pageIndex: Int, lowerBound: Int) -> [LXSectionModel] {
-        return self.setupModuleDataSource(modules: page, status: .page(index: pageIndex), lowerBound: lowerBound)
+        return self.setupModuleDataSource(modules: self.header, status: .header, lowerBound: 0)
     }
     
     func setupModuleDataSource(modules: [LXModule], status: LXModuleStatus, lowerBound: Int) -> [LXSectionModel] {
@@ -239,16 +230,14 @@ class LXModuleViewController: UIViewController {
 
 
     func setupTableViewDataSource(currentPage: Int) {
-        
         print ("load datasource \(currentPage)")
-
         if self.pages[currentPage] == nil {
             self.pages[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
                 return LXModuleClass.init()
             })
         }
         let page = self.pages[currentPage]!
-        self.pagesSectionModels[currentPage] = self.setupPageDataSource(page: page, pageIndex: currentPage, lowerBound: self.headerSectionModels.count)
+        self.pagesSectionModels[currentPage] = self.setupModuleDataSource(modules: page, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
     }
     
     func sectionModel(tableView: UITableView, section: Int) -> LXSectionModel {
