@@ -86,9 +86,9 @@ class LXModuleViewController: UIViewController {
             (self.headerSectionModels.last!.moduleModel.module as! LXModule4).FirstLoadPage = currentPage
             (self.headerSectionModels.last!.moduleModel.module as! LXModule4).cells = CellCollection()
         }
-        self.addTableView(page: currentPage) // 添加第一个
-        let _ = self.addNextTableViewIfNeed(currentPage: currentPage)
-        let _ = self.addPreTableViewIfNeed(currentPage: currentPage)
+        self.addPage(page: currentPage) // 添加第一个
+        let _ = self.addNextPageIfNeed(currentPage: currentPage)
+        let _ = self.addPrePageIfNeed(currentPage: currentPage)
         
 
         self.scrollView.setContentOffset(CGPoint(x: screenWidth * CGFloat(currentPage), y: 0), animated: false)
@@ -129,30 +129,29 @@ class LXModuleViewController: UIViewController {
         self.scrollView.contentSize = CGSize(width: screenWidth * CGFloat(maxPage + 1), height: screenHeight)
     }
     
-    func addNextTableViewIfNeed(currentPage: Int) -> Bool {
+    func addNextPageIfNeed(currentPage: Int) -> Bool {
         let nextPage = currentPage + 1
         if nextPage > self.maxPage && nextPage < self.pagesClass.count {
             self.maxPage = nextPage // 注意顺序
-            self.addTableView(page: nextPage)
+            self.addPage(page: nextPage)
             self.updateScrollViewSize(maxPage: self.maxPage)
             return true
         }
         return false
     }
     
-    func addPreTableViewIfNeed(currentPage: Int) -> Bool {
+    func addPrePageIfNeed(currentPage: Int) -> Bool {
         let prePage = currentPage - 1
         if prePage < self.minPage && prePage >= 0 {
             self.minPage = prePage
-            self.addTableView(page: prePage)
+            self.addPage(page: prePage)
             return true
         }
         return false
     }
     
-    func addTableView(page: Int) {
-        self.setupTableViewDataSource(currentPage: page)
-        // tableView
+    func addPage(page: Int) {
+        self.setupPageDataSource(currentPage: page)
         if self.tableViews[page] == nil {
             let pageTableView = LXModuleTableView()
             pageTableView.pageIndex = page
@@ -229,7 +228,7 @@ class LXModuleViewController: UIViewController {
     }
 
 
-    func setupTableViewDataSource(currentPage: Int) {
+    func setupPageDataSource(currentPage: Int) {
         print ("load datasource \(currentPage)")
         if self.pages[currentPage] == nil {
             self.pages[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
@@ -252,16 +251,21 @@ class LXModuleViewController: UIViewController {
     }
 }
 
+// Mark: dataSource
+extension LXModuleViewController {
+
+}
+
 extension LXModuleViewController: UIScrollViewDelegate {
     
     func determinCurrentPage(scrollView: UIScrollView) {
         let offsetX = scrollView.contentOffset.x
         self.currentPage = Int(offsetX / screenWidth)
-        if self.addNextTableViewIfNeed(currentPage: self.currentPage) {
+        if self.addNextPageIfNeed(currentPage: self.currentPage) {
 //            self.offsetObserve(self.tableViewsCollection[self.currentPage + 1]!)
             print("load next \(self.currentPage + 1)")
         }
-        if self.addPreTableViewIfNeed(currentPage: self.currentPage) {
+        if self.addPrePageIfNeed(currentPage: self.currentPage) {
 //            self.offsetObserve(self.tableViewsCollection[self.currentPage - 1]!)
             print("load pree \(self.currentPage - 1)")
         }
