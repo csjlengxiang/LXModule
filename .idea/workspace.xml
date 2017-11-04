@@ -57,8 +57,8 @@
       <file leaf-file-name="LXModuleViewController.swift" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="199" column="29" lean-forward="true" selection-start-line="199" selection-start-column="29" selection-end-line="199" selection-end-column="29" />
+            <state relative-caret-position="460">
+              <caret line="217" column="28" lean-forward="false" selection-start-line="217" selection-start-column="9" selection-end-line="217" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -185,12 +185,12 @@
       <updated>1509721614021</updated>
       <workItem from="1509721615801" duration="3404000" />
       <workItem from="1509765892267" duration="686000" />
-      <workItem from="1509766848589" duration="6251000" />
+      <workItem from="1509766848589" duration="6408000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10341000" />
+    <option name="totallyTimeSpent" value="10498000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="52" y="22" width="1868" height="1058" extended-state="6" />
@@ -319,8 +319,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LXModuleDemo/LXModule/LXModuleViewController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="199" column="29" lean-forward="true" selection-start-line="199" selection-start-column="29" selection-end-line="199" selection-end-column="29" />
+        <state relative-caret-position="460">
+          <caret line="217" column="28" lean-forward="false" selection-start-line="217" selection-start-column="9" selection-end-line="217" selection-end-column="28" />
           <folding />
         </state>
       </provider>

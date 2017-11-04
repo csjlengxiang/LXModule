@@ -186,13 +186,18 @@ class LXModuleViewController: UIViewController {
             }
         }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
     }
-    
+}
+
+// Mark: dataSource
+
+extension LXModuleViewController {
+
     func generateModuleModels(modules: [LXModule], status: LXModuleStatus) -> [LXModuleModel] {
         return modules.map({ (module) -> LXModuleModel in
             return LXModuleModel(module: module, status: status)
         })
     }
-    
+
     func fillModuleModelsRange(lowerBound: Int, moduleModels: [LXModuleModel]) -> Int {
         return moduleModels.reduce(lowerBound) { (lowerBound, sectionModel) -> Int in
             let upperBound = lowerBound + sectionModel.module.numberOfSections(in: self.tableView)
@@ -209,7 +214,18 @@ class LXModuleViewController: UIViewController {
         }
         return self.setupModuleDataSource(modules: self.header, status: .header, lowerBound: 0)
     }
-    
+
+    func setupPageDataSource(currentPage: Int) {
+        print ("load datasource \(currentPage)")
+        if self.pages[currentPage] == nil {
+            self.pages[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
+                return LXModuleClass.init()
+            })
+        }
+        let page = self.pages[currentPage]!
+        self.pagesSectionModels[currentPage] = self.setupModuleDataSource(modules: page, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
+    }
+
     func setupModuleDataSource(modules: [LXModule], status: LXModuleStatus, lowerBound: Int) -> [LXSectionModel] {
         let moduleModels = self.generateModuleModels(modules: modules, status: status)
         let sectionEnd = self.fillModuleModelsRange(lowerBound: lowerBound, moduleModels: moduleModels)
@@ -227,18 +243,6 @@ class LXModuleViewController: UIViewController {
         return sectionModels
     }
 
-
-    func setupPageDataSource(currentPage: Int) {
-        print ("load datasource \(currentPage)")
-        if self.pages[currentPage] == nil {
-            self.pages[currentPage] = self.pagesClass[currentPage].map({ (LXModuleClass) -> LXModule in
-                return LXModuleClass.init()
-            })
-        }
-        let page = self.pages[currentPage]!
-        self.pagesSectionModels[currentPage] = self.setupModuleDataSource(modules: page, status: .page(index: currentPage), lowerBound: self.headerSectionModels.count)
-    }
-    
     func sectionModel(tableView: UITableView, section: Int) -> LXSectionModel {
         let currentPage = (tableView as! LXModuleTableView).pageIndex
         var sectionModel: LXSectionModel!
@@ -249,11 +253,6 @@ class LXModuleViewController: UIViewController {
         }
         return sectionModel
     }
-}
-
-// Mark: dataSource
-extension LXModuleViewController {
-
 }
 
 extension LXModuleViewController: UIScrollViewDelegate {
