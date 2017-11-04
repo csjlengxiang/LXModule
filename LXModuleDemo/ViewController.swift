@@ -86,29 +86,37 @@ class LXModule4: LXModule {
     }
 }
 
+class HeaderCell: UITableViewCell {
+
+}
+
 class LXModule1: LXModule {
     
+    var view: HeaderCell!
     override func setupModule() {
-        self.register(cellClass: Cell.self, forCellReuseIdentifier: NSStringFromClass(Cell.self))
+        self.view = HeaderCell(style: .default, reuseIdentifier: nil)
+        self.view.backgroundColor = UIColor.yellow
+        
+        let lb = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 100))
+        lb.text = "header"
+        
+        self.view.addSubview(lb)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(Cell.self)) as! Cell
-        
-        let page = (tableView as! LXModuleTableView).pageIndex
-        cell.setTitle(title: "page \(page) LXModule1 \(indexPath.section) - \(indexPath.row)")
-        cell.backgroundColor = UIColor.gray
-        return cell
+        return self.view
     }
 }
 
