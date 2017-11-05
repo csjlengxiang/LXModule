@@ -9,7 +9,7 @@
 import UIKit
 
 class LXModule: NSObject {
-    var registers: [(AnyClass, String)] = []
+    final var registers: [(AnyClass, String)] = []
     weak var vc: LXModuleViewController!
     required override init() {
         super.init()

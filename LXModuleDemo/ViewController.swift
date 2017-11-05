@@ -32,6 +32,30 @@ class Cell: UITableViewCell {
     
 }
 
+class Cell1: UITableViewCell {
+    
+    var lb: UILabel!
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        let lb = UILabel()
+        lb.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
+        lb.textAlignment = .center
+        self.addSubview(lb)
+        self.lb = lb
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setTitle(title: String) {
+        self.lb.text = title
+    }
+    
+}
+
 class CellCollection {
     var cells: [Int : UITableViewCell] = [:]
     
@@ -149,7 +173,7 @@ class LXModule2: LXModule {
 class LXModule3: LXModule {
     
     override func setupModule() {
-        self.register(cellClass: Cell.self, forCellReuseIdentifier: NSStringFromClass(Cell.self))
+        self.register(cellClass: Cell1.self, forCellReuseIdentifier: NSStringFromClass(Cell1.self))
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -161,7 +185,7 @@ class LXModule3: LXModule {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(Cell.self)) as! Cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(Cell1.self)) as! Cell1
 
         let page = (tableView as! LXModuleTableView).pageIndex
         cell.setTitle(title: "page \(page) LXModule3 \(indexPath.section) - \(indexPath.row)")
@@ -207,7 +231,7 @@ class ViewController: LXModuleViewController {
                                              [LXModule2.self],
                                              [LXModule3.self],
                                              [LXModule2.self, LXModule2.self],
-                                             [LXModule3.self, LXModule3.self]]
+                                             [LXModule3.self, LXModule3.self, LXModule2.self]]
         return (headerClass, pagesClass)
     }
 

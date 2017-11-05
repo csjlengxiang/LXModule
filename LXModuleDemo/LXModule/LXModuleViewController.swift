@@ -156,7 +156,8 @@ class LXModuleViewController: UIViewController {
 
         if self.pages[page] == nil && self.tableViews[page] == nil {
             // 创建 tableview
-            let pageTableView = LXModuleTableView()
+            let pageTableView = LXModuleTableView(frame: CGRect.zero, style: .plain)
+            pageTableView.separatorStyle = .none
             pageTableView.pageIndex = page
             pageTableView.delegate = self
             pageTableView.dataSource = self
@@ -240,7 +241,8 @@ extension LXModuleViewController {
         var moduleModel: LXModuleModel!
         var index = 0
         for sectionIndex in lowerBound..<sectionEnd {
-            if index < moduleModels.count && sectionIndex >= moduleModels[index].sectionRangeInTableView.lowerBound {
+            // 处理 module section == 0 情况
+            while index < moduleModels.count && sectionIndex >= moduleModels[index].sectionRangeInTableView.lowerBound {
                 moduleModel = moduleModels[index]
                 index = index + 1
             }
